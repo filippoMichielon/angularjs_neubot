@@ -49,3 +49,9 @@ body {
 .header {
   background-color: #00b047;
 }
+
+#resultsTextArea {
+	resize: none;
+	height: 1.2em;
+	overflow: hidden;
+}

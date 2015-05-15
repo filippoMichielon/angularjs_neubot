@@ -1,2 +1,31 @@
-<p>Here you can see Neubot tests results</p>
+<div ng-controller="ResultsCtrl">
 
+Test: 
+
+<select ng-model="selectedTest">
+  <option value="speed">Speedtest</option>
+  <option value="raw">Raw</option>
+  <option value="dash">Dash</option>
+  <option value="bittorent">BitTorrent</option>
+</select>
+
+View last: 
+
+<textarea id="resultsTextArea" ng-model="viewLast" cols="3">
+	
+</textarea>
+
+<select ng-model="selectedTime">
+  <option value="days">Day</option>
+  <option value="hours">Hour</option>
+  <option value="mins">Min</option>
+</select>
+
+<button ng-click="setVisible()">Go!</button>
+
+<div ng-show="showData" id="showResults">
+  Selected test: {{selectedTest}}<br>
+	View Last: {{viewLast + " "}} {{selectedTime}}
+</div>
+	
+</div>
