@@ -1,1 +1,27 @@
 <p>This page shows Neubot log files</p>
+
+<div ng-controller="LogCtrl">
+	
+	<table id="logtable" style="width:100%">
+		<tr>	
+		  <th>Timestamp</th>
+			<th>Severity</th>
+			<th>Message</th>
+		</tr>
+		<tr ng-repeat="log in logs" class="logentry">
+			<td>{{log.timestamp}}</td>
+			<td>{{log.severity}}</td>
+			<td>{{log.message}}</td>
+		</tr>
+	</table>
+	
+	
+	
+	<ul class="loglist">
+		<li ng-repeat="log in logs"> <!-- ordine crescente o decrescente-->
+			{{log.severity}}
+			{{log.message}}
+			{{log.timestamp}}
+		</li>
+	</ul>
+</div>

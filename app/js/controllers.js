@@ -12,8 +12,25 @@ appControllers.controller('HomepageCtrl', [function() {
 
 }]);
 
-appControllers.controller('LogCtrl', [function() {
-
+appControllers.controller('LogCtrl', ['$scope', function($scope) {
+	$scope.logs=[
+	 {
+		 "message": "raw_negotiate: not reached final state",
+		 "severity": "WARNING",
+		 "timestamp": 1366195042
+	 },
+	 {
+		 "message": "raw_negotiate: bad response",
+			"severity": "ERROR",
+		 "timestamp": 1366236483
+	 },
+	 {
+		 "message": "raw_negotiate: not reached final state",
+		 "severity": "WARNING",
+		 "timestamp": 1366236484
+	 }
+	];
+	
 }]);
 
 appControllers.controller('ResultsCtrl', ['$scope', function($scope) {
