@@ -25,8 +25,8 @@ appControllers.controller('LogCtrl', ['$scope', function($scope) {
 		 "timestamp": 1366236483
 	 },
 	 {
-		 "message": "raw_negotiate: not reached final state",
-		 "severity": "WARNING",
+		 "message": "everything OK",
+		 "severity": "MESSAGE",
 		 "timestamp": 1366236484
 	 }
 	];

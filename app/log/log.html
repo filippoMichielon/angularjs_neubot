@@ -8,7 +8,7 @@
 			<th>Severity</th>
 			<th>Message</th>
 		</tr>
-		<tr ng-repeat="log in logs" class="logentry">
+		<tr ng-repeat="log in logs"  ng-class="{'ERROR': 'log-error', 'WARNING': 'log-warning', 'MESSAGE': 'log-message'}[log.severity]">
 			<td>{{log.timestamp}}</td>
 			<td>{{log.severity}}</td>
 			<td>{{log.message}}</td>
@@ -25,3 +25,4 @@
 		</li>
 	</ul>
 </div>
+
