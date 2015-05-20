@@ -2,16 +2,25 @@
 
 
   <div ng-controller="SettingsCtrl" >
-    <button ng-click="myData.doClick(item, $event)">Send AJAX Request</button>
-    <br/>
-    Response code: {{myData.status}} <br>
-    Response headers: {{myData.headers}} <br>
-    Response data: {{myData.response}} <br>
+    
+		<button ng-click="myData.getSettings(item, $event)">Send AJAX Request</button><br><br>
+    
+		Response code: {{myData.status}} <br>
+    Response data: {{myData.data}} <br><br>
 
+	  <button ng-click="myData.enableTest('0')">Disable automatic tests</button>		
+	  <button ng-click="myData.enableTest('1')">Enable automatic tests</button>		
+
+
+		
+		<table>
+    	<tr>
+        <th>Id</th>
+        <th>Value</th>
+    	</tr>
+    	<tr ng-repeat="n in keys">
+        <td>{{keys[n]}}</td>
+				<td>{{values[n]}}</td>
+    </tr>
+		
   </div>
-
-  <script>
-    
-  </script>
-
-    

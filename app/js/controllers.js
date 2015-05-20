@@ -49,24 +49,56 @@ appControllers.controller('ResultsCtrl', ['$scope', function($scope) {
 appControllers.controller('SettingsCtrl', function($scope, $http) {
 
   $scope.myData = {};
-  $scope.myData.doClick = function(item, event) {
+	
+	$scope.keys = [];
+	$scope.values = [];
+	
+  $scope.myData.getSettings = function(item, event) {
 
-    var response = $http.get("http://127.0.0.1:9774/api/config");
+    var response = $http.get("http://127.0.0.1:9774/api/config");			
      
     response.success(function(data, status, headers, config) {
-      
+      			
       $scope.myData.status = status;
+						
+			$scope.myData.headers = headers.toString();
+			
       $scope.myData.data = data;
-      $scope.myData.headers = headers;
-				
-			alert(JSON.parse(data));
-      
+			
+			$scope.getData($scope.myData.data);
+			      
     });
      
     response.error(function(data, status, headers, config) {
       alert("AJAX failed!");
     });
+		
+		$scope.getData = function(data) {
+			
+        for (var key in data) {
+          if (data.hasOwnProperty(key)) {
+            $scope.keys.push(key);
+						$scope.values.push(data[key]);
+          }
+        }
+			console.log($scope.keys);
+			console.log($scope.values);
+		}
   }
+	
+	$scope.myData.enableTest = function (data){			
+			
+		var postresponse = $http.post("http://127.0.0.1:9774/api/config", data);		
+			
+		postresponse.success(function(data, status, headers, config){			
+				
+		});
+		
+		postresponse.error(function(data, status, headers, config) {
+      alert("AJAX failed!");
+    });	
+	}
+	
 });
 
 
