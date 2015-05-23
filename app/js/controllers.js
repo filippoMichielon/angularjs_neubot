@@ -50,8 +50,8 @@ appControllers.controller('SettingsCtrl', function($scope, $http) {
 
   $scope.myData = {};
 	
-	$scope.keys = [];
-	$scope.values = [];
+	$scope.keys;
+	$scope.values;
 	
   $scope.myData.getSettings = function(item, event) {
 
@@ -75,12 +75,15 @@ appControllers.controller('SettingsCtrl', function($scope, $http) {
 		
 		$scope.getData = function(data) {
 			
-        for (var key in data) {
-          if (data.hasOwnProperty(key)) {
-            $scope.keys.push(key);
-						$scope.values.push(data[key]);
-          }
+			$scope.keys = [];
+			$scope.values = [];
+			
+      for (var key in data) {
+        if (data.hasOwnProperty(key)) {
+          $scope.keys.push(key);
+			   	$scope.values.push(data[key]);
         }
+      }
 			console.log($scope.keys);
 			console.log($scope.values);
 		}

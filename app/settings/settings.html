@@ -18,9 +18,9 @@
         <th>Id</th>
         <th>Value</th>
     	</tr>
-    	<tr ng-repeat="n in keys">
-        <td>{{keys[n]}}</td>
-				<td>{{values[n]}}</td>
+    	<tr ng-repeat="key in keys">
+        <td>{{keys[$index]}}</td>
+				<td>{{values[$index]}}</td>
     </tr>
 		
   </div>
