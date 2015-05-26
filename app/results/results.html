@@ -1,9 +1,8 @@
-
-
+<!--function to call when page is initialized-->
 <div ng-controller="ResultsCtrl" ng-init="getDataForGraph()">
 
 	<p>Test: 
-
+		<!--ng-model defines which controller variable should be bound to this element-->
 		<select ng-model="selectedTest">
 			<option value="speed">Speedtest</option>
 			<option value="raw">Raw</option>
@@ -29,15 +28,11 @@
 		</div>
 	</p>
 	
+	<!--here goes the chart-->
 	<div id="chart"></div>
 		
-			
-			
-		
-		
-		<p>Scroll with mouse to zoom in/out, drag to move when zoomed</p>
-		
-	
-	</div>
+	<p>Scroll with mouse to zoom in/out, drag to move when zoomed</p>
+
+</div>
 
 

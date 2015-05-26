@@ -1,18 +1,20 @@
 'use strict';
 
-/* Controllers */
 
 var appControllers = angular.module('appControllers', []);
 
+//controller FAQ section
 appControllers.controller('FaqCtrl', [function() {
-
 }]);
 
+//controller for Homepage section
 appControllers.controller('HomepageCtrl', [function() {
-
 }]);
 
+//controller for Log section
 appControllers.controller('LogCtrl', ['$scope', function($scope) {
+	
+	//logs used to populate the log table in the view
 	$scope.logs=[
 	 {
 		 "message": "raw_negotiate: not reached final state",
@@ -30,32 +32,32 @@ appControllers.controller('LogCtrl', ['$scope', function($scope) {
 		 "timestamp": 1366236484
 	 }
 	];
-	
 }]);
 
+//controller for Results section
 appControllers.controller('ResultsCtrl', ['$scope','$http', function($scope,$http) {
   	
+	
+	//variable for the form with default values
 	$scope.selectedTest = 'speed';
 	$scope.selectedTime = 'days';
 	$scope.viewLast='1';
 	$scope.showData='false';
 	
+	//set selected values from form visible
 	$scope.setVisible = function() {
 	  $scope.showData = true;
 	}
-	
-//	$scope.chart = null;
-	
+		
 	$scope.graphData = "";
 	
+	//get data via AJAX request to populate the graph
 	$scope.getDataForGraph = function() {
 		
 		var response = $http.get("http://127.0.0.1:9774/api/data");			
      
    	response.success(function(data, status, headers, config) {
-      			
-			$scope.graphData = data;
-			
+      $scope.graphData = data;			
 			$scope.showGraph();			      
    	});
      
@@ -65,68 +67,69 @@ appControllers.controller('ResultsCtrl', ['$scope','$http', function($scope,$htt
 		
 	}
 	
+	//create and visualize graph
 	$scope.showGraph = function() {
 			
-			var data = $scope.graphData;
+		var data = $scope.graphData;
 			
-			function timestampToDate(timestamp) {
-
-				var d = new Date(); 
+		//convert timestamps to dates
+		function timestampToDate(timestamp) {
+			var d = new Date(); 
+			d.setTime(timestamp*1000);
+			return d;
+		}
+			
+		//first values will be shown as data labels
+		var graphDataX = ['timestamp'];
+		var graphDataY = ['download_speed'];
 				
-				d.setTime(timestamp*1000);
-				return d;
+		//put data inside the arrays
+		function getData(data,container1,container2) {													
+			for (var i = 0; i<data.length; i++) {
+				container1.push(data[i].timestamp);
+				container2.push(data[i].download_speed);					
 			}
 			
-			var graphDataX = ['timestamp'];
-			
-			var graphDataY = ['download_speed'];
-						
-			function getData(data,container1,container2) {													
-				for (var i = 0; i<data.length; i++) {
-					container1.push(data[i].timestamp);
-					container2.push(data[i].download_speed);					
-				}
-				
-				for (var j = 1; j<container1.length; j++) {
-					container1[j] = timestampToDate(container1[j]);
-				}
+			for (var j = 1; j<container1.length; j++) {
+				container1[j] = timestampToDate(container1[j]);
 			}
-			
-			
-			
-			getData(data, graphDataX, graphDataY);
+		}
+		
+		getData(data, graphDataX, graphDataY);
 						
-			console.log(graphDataX);
-			console.log(graphDataY);
+//	console.log(graphDataX);
+//	console.log(graphDataY);
 			
-			var chart = c3.generate({ 
-				bindto: '#chart',
-    		data: {
-					x: 'timestamp',
-					xFormat: '%Y-%m-%d %H:%M:%S',
-      		columns: [
-        		graphDataX,
-        		graphDataY
-      		]
-				},
-				axis: {
-					x: {
-						type: 'timeseries',
-						tick: {
-							format: '%Y-%m-%d %H:%M:%S',
-							rotate: 45,
-						}
+		//create graph
+		var chart = c3.generate({ 
+			bindto: '#chart',									//HTML element where graph sould be visualized
+    	data: {
+				x: 'timestamp',
+				xFormat: '%Y-%m-%d %H:%M:%S',		//date format
+     		columns: [
+       		graphDataX,										//graph X and Y data
+       		graphDataY
+     		]
+			},
+			axis: {
+				x: {
+					type: 'timeseries',
+					tick: {												//ticks options
+						format: '%Y-%m-%d %H:%M:%S',
+						rotate: 45,
 					}
-				}, 
-				zoom: {
-        	enabled: true
 				}
-    	
-			});
+			}, 
+			zoom: {														//zoomable
+       	enabled: true
+			}
+    
+		});
 	}
 
 }]);
 
+//controller for Settings section
 appControllers.controller('SettingsCtrl', function($scope, $http) {
 
   $scope.myData = {};
@@ -134,7 +137,8 @@ appControllers.controller('SettingsCtrl', function($scope, $http) {
 	$scope.keys;
 	$scope.values;
 	
-  $scope.myData.getSettings = function(item, event) {
+	//AJAX request to get settings from API
+  $scope.myData.getSettings = function() {
 
     var response = $http.get("http://127.0.0.1:9774/api/config");			
      
@@ -154,6 +158,7 @@ appControllers.controller('SettingsCtrl', function($scope, $http) {
       alert("AJAX failed!");
     });
 		
+		//parse data received via AJAX and use it as variables
 		$scope.getData = function(data) {
 			
 			$scope.keys = [];
@@ -170,6 +175,7 @@ appControllers.controller('SettingsCtrl', function($scope, $http) {
 		}
   }
 	
+	//AJAX function to send POST request 
 	$scope.myData.enableTest = function (data){			
 			
 		var postresponse = $http.post("http://127.0.0.1:9774/api/config", data);		
