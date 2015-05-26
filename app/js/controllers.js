@@ -33,7 +33,7 @@ appControllers.controller('LogCtrl', ['$scope', function($scope) {
 	
 }]);
 
-appControllers.controller('ResultsCtrl', ['$scope', function($scope) {
+appControllers.controller('ResultsCtrl', ['$scope','$http', function($scope,$http) {
   	
 	$scope.selectedTest = 'speed';
 	$scope.selectedTime = 'days';
@@ -42,6 +42,87 @@ appControllers.controller('ResultsCtrl', ['$scope', function($scope) {
 	
 	$scope.setVisible = function() {
 	  $scope.showData = true;
+	}
+	
+//	$scope.chart = null;
+	
+	$scope.graphData = "";
+	
+	$scope.getDataForGraph = function() {
+		
+		var response = $http.get("http://127.0.0.1:9774/api/data");			
+     
+   	response.success(function(data, status, headers, config) {
+      			
+			$scope.graphData = data;
+			
+			$scope.showGraph();			      
+   	});
+     
+   	response.error(function(data, status, headers, config) {
+     	alert("AJAX failed!");
+   	});
+		
+	}
+	
+	$scope.showGraph = function() {
+			
+			var data = $scope.graphData;
+			
+			function timestampToDate(timestamp) {
+
+				var d = new Date(); 
+				
+				d.setTime(timestamp*1000);
+				return d;
+			}
+			
+			var graphDataX = ['timestamp'];
+			
+			var graphDataY = ['download_speed'];
+						
+			function getData(data,container1,container2) {													
+				for (var i = 0; i<data.length; i++) {
+					container1.push(data[i].timestamp);
+					container2.push(data[i].download_speed);					
+				}
+				
+				for (var j = 1; j<container1.length; j++) {
+					container1[j] = timestampToDate(container1[j]);
+				}
+			}
+			
+			
+			
+			getData(data, graphDataX, graphDataY);
+						
+			console.log(graphDataX);
+			console.log(graphDataY);
+			
+			var chart = c3.generate({ 
+				bindto: '#chart',
+    		data: {
+					x: 'timestamp',
+					xFormat: '%Y-%m-%d %H:%M:%S',
+      		columns: [
+        		graphDataX,
+        		graphDataY
+      		]
+				},
+				axis: {
+					x: {
+						type: 'timeseries',
+						tick: {
+							format: '%Y-%m-%d %H:%M:%S',
+							rotate: 45,
+						}
+					}
+				}, 
+				zoom: {
+        	enabled: true
+				}
+    	
+			});
 	}
 
 }]);
