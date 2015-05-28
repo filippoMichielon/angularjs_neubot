@@ -1,15 +1,12 @@
 'use strict';
 
+//TODO: remove ng-init
+//		  only use $scope for functions and variables used by views
+//			don't manipulate DOM with controllers (use directives instead)
+//			don't put common functions inside controllers (use services instead)
+//			maybe it's better to assign controllers to partials in app.js instead of inside the partials
 
-var appControllers = angular.module('appControllers', []);
-
-//controller FAQ section
-appControllers.controller('FaqCtrl', [function() {
-}]);
-
-//controller for Homepage section
-appControllers.controller('HomepageCtrl', [function() {
-}]);
+var appControllers = angular.module('appControllers', []);			
 
 //controller for Log section
 appControllers.controller('LogCtrl', ['$scope', function($scope) {
@@ -193,10 +190,11 @@ appControllers.controller('SettingsCtrl', function($scope, $http) {
 	
 });
 
-//controller for sidebar (state requests)
-appControllers.controller('SidebarCtrl', function($scope, $http, $timeout) {
+
+//controller for FAQ section
+appControllers.controller('FaqCtrl', function($scope, $http, $timeout) {
 	
-	
+		
 	$scope.getState = function (url, data) {
 		
 		alert("url: " + url + " data: " + data);
@@ -213,13 +211,18 @@ appControllers.controller('SidebarCtrl', function($scope, $http, $timeout) {
     response.error(function(data, status, headers, config) {
 			
 			$timeout(function() { 
-				$scope.getState("http://127.0.0.1:9774/api/state","");
+				$scope.getState("http://127.0.0.1:9774/api/state","", false);			//is false parameter right here?
 			}, 5000);
 		});
+		
 	}
-	
-
-	
-	//$scope.getState("ttp://127.0.0.1:9774/api/state","");
 });
 
+//controller for Homepage section
+appControllers.controller('HomepageCtrl', function() {
+});
+
+//controller for sidebar (state requests)
+appControllers.controller('SidebarCtrl', function() {
+	
+});
