@@ -35,7 +35,7 @@ appControllers.controller('LogCtrl', ['$scope', function($scope) {
 }]);
 
 //controller for Results section
-appControllers.controller('ResultsCtrl', ['$scope','$http', function($scope,$http) {
+appControllers.controller('ResultsCtrl', function($scope,$http) {
   	
 	
 	//variable for the form with default values
@@ -127,7 +127,7 @@ appControllers.controller('ResultsCtrl', ['$scope','$http', function($scope,$htt
 		});
 	}
 
-}]);
+});
 
 //controller for Settings section
 appControllers.controller('SettingsCtrl', function($scope, $http) {
@@ -187,8 +187,39 @@ appControllers.controller('SettingsCtrl', function($scope, $http) {
 		postresponse.error(function(data, status, headers, config) {
       alert("AJAX failed!");
     });	
+		
+		$scope.myData.getSettings();
 	}
 	
 });
 
+//controller for sidebar (state requests)
+appControllers.controller('SidebarCtrl', function($scope, $http, $timeout) {
+	
+	
+	$scope.getState = function (url, data) {
+		
+		alert("url: " + url + " data: " + data);
+				
+		var response = $http.get(url, data);			
+     
+    response.success(function(data, status, headers, config) {
+			
+			$scope.getState("http://127.0.0.1:9774/api/state", data.t);
+			
+			      
+    });
+     
+    response.error(function(data, status, headers, config) {
+			
+			$timeout(function() { 
+				$scope.getState("http://127.0.0.1:9774/api/state","");
+			}, 5000);
+		});
+	}
+	
+
+	
+	//$scope.getState("ttp://127.0.0.1:9774/api/state","");
+});
 
