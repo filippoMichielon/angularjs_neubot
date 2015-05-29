@@ -1,11 +1,5 @@
 'use strict';
 
-//TODO: remove ng-init																																									V
-//		  only use $scope for functions and variables used by views																				V
-//			don't manipulate DOM with controllers (use directives instead)																	V (they should not be needed here)
-//			don't put common functions inside controllers (use services instead)														V (same here))
-//			maybe it's better to assign controllers to partials in app.js instead of inside the partials		V
-
 var appControllers = angular.module(
   'appControllers', []);
 
