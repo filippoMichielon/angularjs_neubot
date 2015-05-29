@@ -1,9 +1,9 @@
 'use strict';
 
-//TODO: remove ng-init
-//		  only use $scope for functions and variables used by views
-//			don't manipulate DOM with controllers (use directives instead)
-//			don't put common functions inside controllers (use services instead)
+//TODO: remove ng-init																																									V
+//		  only use $scope for functions and variables used by views																				V
+//			don't manipulate DOM with controllers (use directives instead)																	V (they should not be needed here)
+//			don't put common functions inside controllers (use services instead)														V (same here))
 //			maybe it's better to assign controllers to partials in app.js instead of inside the partials
 
 var appControllers = angular.module('appControllers', []);			
@@ -46,15 +46,15 @@ appControllers.controller('ResultsCtrl', function($scope,$http) {
 	  $scope.showData = true;
 	}
 		
-	$scope.graphData = "";
+	var graphData = "";
 	
 	//get data via AJAX request to populate the graph
-	$scope.getDataForGraph = function() {
+	function getDataForGraph() {
 		
 		var response = $http.get("http://127.0.0.1:9774/api/data");			
      
    	response.success(function(data, status, headers, config) {
-      $scope.graphData = data;			
+      graphData = data;			
 			$scope.showGraph();			      
    	});
      
@@ -66,9 +66,7 @@ appControllers.controller('ResultsCtrl', function($scope,$http) {
 	
 	//create and visualize graph
 	$scope.showGraph = function() {
-			
-		var data = $scope.graphData;
-			
+						
 		//convert timestamps to dates
 		function timestampToDate(timestamp) {
 			var d = new Date(); 
@@ -92,7 +90,7 @@ appControllers.controller('ResultsCtrl', function($scope,$http) {
 			}
 		}
 		
-		getData(data, graphDataX, graphDataY);
+		getData(graphData, graphDataX, graphDataY);
 						
 //	console.log(graphDataX);
 //	console.log(graphDataY);
@@ -123,31 +121,31 @@ appControllers.controller('ResultsCtrl', function($scope,$http) {
     
 		});
 	}
+	
+	getDataForGraph();
 
 });
 
 //controller for Settings section
 appControllers.controller('SettingsCtrl', function($scope, $http) {
-
-  $scope.myData = {};
 	
 	$scope.keys;
 	$scope.values;
 	
 	//AJAX request to get settings from API
-  $scope.myData.getSettings = function() {
+  $scope.getSettings = function() {
 
     var response = $http.get("http://127.0.0.1:9774/api/config");			
      
     response.success(function(data, status, headers, config) {
       			
-      $scope.myData.status = status;
+      $scope.status = status;
 						
-			$scope.myData.headers = headers.toString();
+			$scope.headers = headers.toString();
 			
-      $scope.myData.data = data;
+      $scope.data = data;
 			
-			$scope.getData($scope.myData.data);
+			$scope.getData($scope.data);
 			      
     });
      
@@ -173,7 +171,7 @@ appControllers.controller('SettingsCtrl', function($scope, $http) {
   }
 	
 	//AJAX function to send POST request 
-	$scope.myData.enableTest = function (data){			
+	$scope.enableTest = function (data){			
 			
 		var postresponse = $http.post("http://127.0.0.1:9774/api/config", data);		
 			
@@ -185,7 +183,7 @@ appControllers.controller('SettingsCtrl', function($scope, $http) {
       alert("AJAX failed!");
     });	
 		
-		$scope.myData.getSettings();
+		$scope.getSettings();
 	}
 	
 });

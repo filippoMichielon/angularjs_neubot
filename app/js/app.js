@@ -9,19 +9,24 @@ var myApp = angular.module('myApp', [
 //app configuration
 myApp.config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/faq', {				//when a view is selected, then the correct file must be visualized
-    templateUrl: 'partials/faq.html'
+    templateUrl: 'partials/faq.html',
+		controller: 'FaqCtrl'
   }).
   when('/log', {
-    templateUrl: 'partials/log.html'
+    templateUrl: 'partials/log.html',
+		controller: 'LogCtrl'
   }).
   when('/homepage', {
-    templateUrl: 'partials/homepage.html'
+    templateUrl: 'partials/homepage.html',
+		controller: 'HomepageCtrl'
   }).
   when('/results', {
-    templateUrl: 'partials/results.html'
+    templateUrl: 'partials/results.html',
+		controller: 'ResultsCtrl'
   }).
   when('/settings', {
-    templateUrl: 'partials/settings.html'
+    templateUrl: 'partials/settings.html',
+		controller: 'SettingsCtrl'
   }).
   otherwise({redirectTo: 'partials/homepage'});
 }]);
