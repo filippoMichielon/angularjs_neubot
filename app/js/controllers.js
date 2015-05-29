@@ -182,17 +182,21 @@ appControllers.controller('SettingsCtrl', function($scope, $http) {
 });
 
 //controller for FAQ section
-appControllers.controller('FaqCtrl',function($scope, $http, $timeout) {
+appControllers.controller('SidebarCtrl',function($scope, $http, $timeout) {
 
+  $scope.crtT = "";
+  
   $scope.getState = function(url, data) {
 
-    console.log("url: " + url + " data: " + data);
+    console.log("url: " + url);
 
     var response = $http.get(url, data);
 
     response.success(function(data, status, headers, config) {
 
-        $scope.getState("http://127.0.0.1:9774/api/state?t=" + data.t);
+      $scope.getState("http://127.0.0.1:9774/api/state?t=" + data.t);
+      
+      $scope.crtT = data.t;
 
     });
 
@@ -205,6 +209,7 @@ appControllers.controller('FaqCtrl',function($scope, $http, $timeout) {
 
   }
 
+  $scope.getState("http://127.0.0.1:9774/api/state");
 });
 
 //controller for Homepage section
@@ -213,6 +218,6 @@ appControllers.controller('HomepageCtrl', function() {
 });
 
 //controller for sidebar (state requests)
-appControllers.controller('SidebarCtrl', function() {
+appControllers.controller('FaqCtrl', function() {
 
 });

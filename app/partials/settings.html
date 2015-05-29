@@ -1,0 +1,26 @@
+<p>In this page you can control Neubot settings and privacy</p>
+
+<div>
+    
+	<button ng-click="getSettings()">Send AJAX Request</button><br><br>
+    
+	<!--data between curly brackets is populated dinamically by the controller-->
+	Response code: {{status}} <br>
+  Response data: {{data}} <br><br>
+
+  <button ng-click="enableTest('0')">Disable automatic tests</button>		
+  <button ng-click="enableTest('1')">Enable automatic tests</button>		
+
+
+		
+	<table>
+		<tr>
+       <th>Id</th>
+       <th>Value</th>
+   	</tr>
+   	<tr ng-repeat="key in keys">
+      <td>{{keys[$index]}}</td>
+			<td>{{values[$index]}}</td>
+    </tr>
+		
+</div>

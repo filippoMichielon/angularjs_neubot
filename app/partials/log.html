@@ -1,0 +1,29 @@
+<p>This page shows Neubot log files</p>
+
+<div>
+	
+	<table id="logtable" style="width:100%">
+		<tr>	
+		  <th>Timestamp</th>
+			<th>Severity</th>
+			<th>Message</th>
+		</tr>
+		
+		<!--table is populated iterating through logs and each entry is given a class according to log severity-->
+		<tr ng-repeat="log in logs"  ng-class="{'ERROR': 'log-error', 'WARNING': 'log-warning', 'MESSAGE': 'log-message'}[log.severity]">
+			<td>{{log.timestamp}}</td>
+			<td>{{log.severity}}</td>
+			<td>{{log.message}}</td>
+		</tr>
+	</table>
+	
+	<ul class="loglist">
+		<li ng-repeat="log in logs">
+			{{log.severity}}
+			{{log.message}}
+			{{log.timestamp}}
+		</li>
+	</ul>
+
+</div>
+

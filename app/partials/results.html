@@ -1,0 +1,38 @@
+<!--function to call when page is initialized-->
+<div>
+
+	<p>Test: 
+		<!--ng-model defines which controller variable should be bound to this element-->
+		<select ng-model="selectedTest">
+			<option value="speed">Speedtest</option>
+			<option value="raw">Raw</option>
+			<option value="dash">Dash</option>
+			<option value="bittorent">BitTorrent</option>
+		</select>
+
+		View last: 
+
+		<textarea id="resultsTextArea" ng-model="viewLast" cols="3"></textarea>
+
+		<select ng-model="selectedTime">
+			<option value="days">Day</option>
+			<option value="hours">Hour</option>
+			<option value="mins">Min</option>
+		</select>
+
+		<button ng-click="setVisible()">Go!</button>
+
+		<div ng-show="showData" id="showResults">
+			Selected test: {{selectedTest}}<br/>
+			View Last: {{viewLast + " "}} {{selectedTime}}
+		</div>
+	</p>
+	
+	<!--here goes the chart-->
+	<div id="chart"></div>
+		
+	<p>Scroll with mouse to zoom in/out, drag to move when zoomed</p>
+
+</div>
+
+
