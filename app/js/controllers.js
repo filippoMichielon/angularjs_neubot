@@ -29,10 +29,11 @@ appControllers.controller('ResultsCtrl', function($scope, $http) {
   $scope.selectedTest = 'speed';
   $scope.selectedTime = 'days';
   $scope.viewLast = '1';
-  $scope.showData = 'false';
+  $scope.showData = false;
 
   //set selected values from form visible
   $scope.setVisible = function() {
+    
     $scope.showData = true;
   }
 
@@ -101,7 +102,7 @@ appControllers.controller('ResultsCtrl', function($scope, $http) {
           type: 'timeseries',
           tick: { //ticks options
             format: '%Y-%m-%d %H:%M:%S',
-            rotate: 45,
+            rotate: 90,
           }
         }
       },
@@ -109,10 +110,14 @@ appControllers.controller('ResultsCtrl', function($scope, $http) {
         enabled: true
       }
     });
+    
+      console.log(graphDataX);
+    console.log(graphDataY);
   }
 
   getDataForGraph();
 
+  
 });
 
 //controller for Settings section
@@ -174,33 +179,35 @@ appControllers.controller('SettingsCtrl', function($scope, $http) {
   }
 });
 
-//controller for FAQ section
+//controller for sidebar (state tracker)
 appControllers.controller('SidebarCtrl', function($scope, $http, $timeout) {
 
   $scope.crtT = "";
+  $scope.state = "";
 
-  $scope.getState = function(url, data) {
+  var getState = function(url, data) {
 
-    console.log("url: " + url);
+    //console.log("url: " + url);
 
     var response = $http.get(url, data);
 
     response.success(function(data, status, headers, config) {
 
-      $scope.getState("http://127.0.0.1:9774/api/state?t=" + data.t);
+      getState("http://127.0.0.1:9774/api/state?t=" + data.t);
       $scope.crtT = data.t;
+      $scope.state = data.current;
     });
 
     response.error(function(data, status, headers, config) {
 
       $timeout(function() {
-        $scope.getState("http://127.0.0.1:9774/api/state", ""); //is false parameter right here?
+        getState("http://127.0.0.1:9774/api/state");
       }, 5000);
     });
 
   }
 
-  $scope.getState("http://127.0.0.1:9774/api/state");
+  getState("http://127.0.0.1:9774/api/state");
 });
 
 //controller for Homepage section
@@ -208,7 +215,7 @@ appControllers.controller('HomepageCtrl', function() {
 
 });
 
-//controller for sidebar (state requests)
+//controller for FAQ section
 appControllers.controller('FaqCtrl', function() {
 
 });
