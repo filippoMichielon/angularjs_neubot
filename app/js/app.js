@@ -33,23 +33,9 @@ myApp.config(['$routeProvider', '$translateProvider', function($routeProvider, $
     redirectTo: 'partials/homepage'
   });
   
-  $translateProvider.translations('en', translationsEN);
-  
-  $translateProvider.translations('it', translationsIT);
-  
-  $translateProvider.preferredLanguage('en');
-  
+  $translateProvider
+    .translations('en', translationsEN)
+    .translations('it', translationsIT)
+    .preferredLanguage('en')
+    .fallbackLanguage('en');  
 }]);
-
-var translationsEN = {
-  'TITLE': 'Hello',
-  'PARAGRAPH1': 'Welcome to Neubot interface FAQ section!',
-  'PARAGRAPH2': 'To be honest, in this section you won\'t find the actual Neubot FAQ, it was just used to test angular-translate module.'
-
-};
- 
-var translationsIT = {
-  'TITLE': 'Ciao',
-  'PARAGRAPH1': 'Benvenuto nella sezione dell\'interfaccia di Neubot dedicata alle domande più frequenti!',
-  'PARAGRAPH2': 'In questa sezione non troverai veramente le FAQ di Neubot, è stata semplicemente utilizzata per testare il modulo angular-translate.'
-};
