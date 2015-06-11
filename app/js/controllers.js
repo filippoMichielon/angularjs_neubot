@@ -218,7 +218,7 @@ appControllers.controller('HomepageCtrl', function() {
 //controller for FAQ section
 appControllers.controller('FaqCtrl', function($scope, $translate) {
 
-    $scope.changeLanguage = function (lang) {
+  $scope.changeLanguage = function (lang) {
     $translate.use(lang);
   };
   
